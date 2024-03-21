@@ -18,6 +18,7 @@ exports.post = async (req, res, next) => {
     const conn = await connect();
     const sql = "INSERT INTO usuario (nome, telefone, email, senha) VALUES (?,?,?,?)";
 
+
     const values = [req.body.nome, req.body.telefone, req.body.email, req.body.senha];
 
     // for (var i = 0; i < 10000; i++) {
