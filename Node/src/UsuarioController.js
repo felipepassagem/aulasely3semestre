@@ -58,7 +58,7 @@ exports.get = async (req, res, next) => {
 
     const values = [req.params.id];
     
-    var rows = await conn.query(sql, values)
+    const [rows] = await conn.query(sql, values)
 
     res.status(201).send(rows);
 }
