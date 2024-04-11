@@ -27,6 +27,21 @@
         </div>
       </div>
 
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">
+          Pesquisa
+        </span>
+        <input type="text" class="form-control" id="txtpesquisa" aria-label="Username" aria-describedby="basic-addon1" >
+        <button type="button" class="btn btn-primary" onclick="listar()"> Pesquisar  </button>
+
+      </div>
+
+
+      <!-- <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form> -->
+
     <!-- //data-bs-target="#modal-alterar" -->
 
 
@@ -98,6 +113,24 @@
       </div>
     </div>
 
+  </div>
+
+
+  
+  <div class="modal fade" id="modal-excluir" tabindex="-1" aria-labelledby="modal-excluir" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          Confirma a exclusão?
+
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+          <button type="button" class="btn btn-primary" onclick="excluirSim()">Sim</button>
+        </div>
+      </div>
+    </div>
   </div>
 
 

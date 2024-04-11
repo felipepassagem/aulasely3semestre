@@ -4,6 +4,11 @@ const modal = new bootstrap.Modal(
     document.getElementById('modal-alterar')
 );
 
+
+const modalExckuir = new bootstrap.Modal(
+    document.getElementById('modal-excluir')
+);
+
 function novo() {
     idatual = -1;
     const txtnome = document.getElementById("txtnome");
@@ -52,8 +57,9 @@ function listar() {
 
     const lista = document.getElementById("table");
     lista.innerHTML = "<tr><td colspan=5> Carregando... </td></tr>"
+    txtpesquisa = document.getElementById("txtpesquisa");
 
-    fetch("http://127.0.0.1:3333/usuario/")
+    fetch("http://127.0.0.1:3333/usuario/?pesquisa="+txtpesquisa.value)
         .then(response => response.json())
         .then(dados => mostrar(dados))
 
@@ -74,18 +80,25 @@ function mostrar(dados) {
             + "<td>" + dados[i].nome + "</td>"
             + "<td>" + dados[i].telefone + "</td>"
             + "<td>" + dados[i].email + "</td>"
-            + "<td> <button class='btn btn-success' onclick=alterar(" + id + ")><i class='bi bi-pencil'></i></button> <button class='btn btn-danger' onclick=excluir(" + id + ")><i class='bi bi-trash'></i></button></td>"
+            + "<td> <button class='btn btn-success' onclick=alterar(" + id + ")><i class='bi bi-pencil'></i></button> <button class='btn btn-danger' onclick='showModalExcluir("+id+")'><i class='bi bi-trash'></i></button></td>"
             + "</tr>"
     }
 }
 
-function excluir(id) {
-    url = "http://127.0.0.1:3333/usuario" + id
-    metodo = "DELETE"
-    if (window.confirm("Gostarias realemtne de excluir este registro?")) {
+function showModalExcluir(id){
+    modalExckuir.show();
+    idatual = id;
+}
 
-        fetch("http://127.0.0.1:3333/usuario/" + id,
+function excluirSim() {
+    url = "http://127.0.0.1:3333/usuario/" + idatual;
+    metodo = "DELETE"
+
+    if (idatual > 0) {
+        fetch(url,
+            
             {
+                method: metodo,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
@@ -95,20 +108,38 @@ function excluir(id) {
                 method: "DELETE",
             }
         ).then(() => {
+            modalExckuir.hide();
             listar();
-            alert("APAGOU")
+            
         })
-
-
-    } else {
-        alert("NAO APAGOU")
     }
 
+    
+    // if (window.confirm("Gostarias realemtne de excluir este registro?")) {
+
+    //     fetch(url,
+    //         {
+    //             headers: {
+    //                 'Accept': 'application/json',
+    //                 'Content-Type': 'application/json'
+
+    //             },
+
+    //             method: "DELETE",
+    //         }
+    //     ).then(() => {
+    //         listar();
+    //         alert("APAGOU")
+    //     })
+
+
+    // } else {
+    //     alert("NAO APAGOU")
+    // }
+
 }
 
-function excluirSim() {
 
-}
 
 // Função fetch com timeout
 function fetchWithTimeout(url, options, timeout = 5000) {

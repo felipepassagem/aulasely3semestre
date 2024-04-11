@@ -43,6 +43,8 @@ exports.put = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
     const conn = await connect();
+
+    
     const sql = "DELETE FROM usuario WHERE idusuario = ?";
 
     const values = [req.params.id];
@@ -54,13 +56,16 @@ exports.delete = async (req, res, next) => {
 
 exports.get = async (req, res, next) => {
     const conn = await connect();
-    const sql = "SELECT * FROM usuario";
+    // const sql = "SELECT * FROM usuario";
 
-    const values = [req.params.id];
+    const pesquisa = req.query.pesquisa;
+    const sql = "SELECT * FROM usuario WHERE nome LIKE ? ORDER BY nome;";
+
+    const values = ["%" + pesquisa + "%"];
     
     const [rows] = await conn.query(sql, values)
 
-    res.status(201).send(rows);
+    res.status(200).send(rows);
 }
 
 
@@ -80,3 +85,5 @@ exports.getById = async (req, res, next) => {
 
     
 }
+
+
